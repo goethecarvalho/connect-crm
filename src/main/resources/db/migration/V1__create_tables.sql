@@ -10,7 +10,7 @@ CREATE TABLE entidades (
     nome VARCHAR(255) NOT NULL,
     tipo VARCHAR(50) NOT NULL -- pode ser 'cliente', 'fornecedor' ou 'prestador'
     -- outros campos específicos
-    CONSTRAINT chk_tipo CHECK (tipo IN ('cliente', 'fornecedor', 'prestador'))
+    CONSTRAINT chk_tipo CHECK (tipo IN ('CLIENTE', 'FORNECEDOR', 'PRESTADOR'))
 );
 
 CREATE TABLE propostas (

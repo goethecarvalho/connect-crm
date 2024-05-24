@@ -20,13 +20,10 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    @Cacheable(value = "listaUsuarios")
     public Page<DadosDetalheUsuario> listar(Pageable paginacao) {
         return repository.findAll(paginacao).map(DadosDetalheUsuario::new);
     }
 
-
-    @CacheEvict(value = "listaUsuarios", allEntries = true)
     public DadosDetalheUsuario cadastrarUsuario(DadosUsuario dados) {
         if (dados.nome() == null || dados.nome().isEmpty()) {
             throw new RegraDeNegocioException("O nome deve estar preenchido!");
@@ -39,7 +36,6 @@ public class UsuarioService {
         return new DadosDetalheUsuario(usuario);
     }
 
-    @CacheEvict(value = "listaUsuarios", allEntries = true)
     public DadosDetalheUsuario atualizarUsuario(Long id, DadosUsuario dados) {
         var usuario = repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
@@ -62,7 +58,6 @@ public class UsuarioService {
         return new DadosDetalheUsuario(usuario);
     }
 
-    @CacheEvict(value = "listaUsuarios", allEntries = true)
     public void deletarUsuario(Long id) {
         var usuario = repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         repository.delete(usuario);
