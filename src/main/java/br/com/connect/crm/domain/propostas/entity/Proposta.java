@@ -1,8 +1,6 @@
 package br.com.connect.crm.domain.propostas.entity;
 
 import br.com.connect.crm.domain.entidades.entity.Entidade;
-import br.com.connect.crm.domain.entidades.vo.DadosEntidade;
-import br.com.connect.crm.domain.entidades.vo.TipoEntidade;
 import br.com.connect.crm.domain.propostas.vo.DadosProposta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,7 +35,7 @@ public class Proposta {
         this.entidade = entidade;
     }
 
-    public void atualizarDados(DadosProposta dados, Entidade entidade) {
+    public void atualizarDados(DadosProposta dados) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();

@@ -46,6 +46,7 @@ public class PropostaService {
                 dados.id(),
                 dados.descricao(),
                 dados.data(),
+                dados.valor(),
                 dados.idEntidade()
         );
 
