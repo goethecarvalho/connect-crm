@@ -1,12 +1,12 @@
-package br.com.connect.crm.domain.propostas.service;
+package br.com.connect.crm.domain.proposta.service;
 
 import br.com.connect.crm.domain.RegraDeNegocioException;
-import br.com.connect.crm.domain.entidades.entity.Entidade;
-import br.com.connect.crm.domain.entidades.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.propostas.entity.Proposta;
-import br.com.connect.crm.domain.propostas.repository.PropostaRepository;
-import br.com.connect.crm.domain.propostas.vo.DadosDetalheProposta;
-import br.com.connect.crm.domain.propostas.vo.DadosProposta;
+import br.com.connect.crm.domain.entidade.entity.Entidade;
+import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
+import br.com.connect.crm.domain.proposta.entity.Proposta;
+import br.com.connect.crm.domain.proposta.repository.PropostaRepository;
+import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
+import br.com.connect.crm.domain.proposta.vo.DadosProposta;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -52,7 +52,8 @@ public class PropostaService {
                 dados.data(),
                 dados.valor(),
                 dados.entidade(),
-                dados.tipo()
+                dados.tipo(),
+                dados.status()
         );
 
         proposta.atualizarDados(propostaAtualizada);

@@ -1,8 +1,9 @@
-package br.com.connect.crm.domain.propostas.entity;
+package br.com.connect.crm.domain.proposta.entity;
 
-import br.com.connect.crm.domain.entidades.entity.Entidade;
-import br.com.connect.crm.domain.propostas.vo.DadosProposta;
-import br.com.connect.crm.domain.propostas.vo.TipoProposta;
+import br.com.connect.crm.domain.entidade.entity.Entidade;
+import br.com.connect.crm.domain.proposta.vo.DadosProposta;
+import br.com.connect.crm.domain.proposta.vo.StatusProposta;
+import br.com.connect.crm.domain.proposta.vo.TipoProposta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class Proposta {
     @Enumerated(EnumType.STRING)
     private TipoProposta tipo;
 
+    @Enumerated(EnumType.STRING)
+    private StatusProposta status;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entidade_id")
     private Entidade entidade;
@@ -46,13 +50,16 @@ public class Proposta {
         this.valor = dados.valor();
         this.tipo = dados.tipo();
         this.entidade = entidade;
+        this.status = dados.status();
     }
 
     public void atualizarDados(DadosProposta dados) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
+        this.tipo = dados.tipo();
         this.entidade = entidade;
+        this.status = dados.status();
     }
 
 }

@@ -1,4 +1,4 @@
-package br.com.connect.crm.domain.propostas.vo;
+package br.com.connect.crm.domain.proposta.vo;
 
 public enum TipoProposta {
     RESIDENCIAL,
