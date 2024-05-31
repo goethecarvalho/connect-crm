@@ -1,14 +1,10 @@
-package br.com.connect.crm.domain.entidades.service;
+package br.com.connect.crm.domain.entidade.service;
 
 import br.com.connect.crm.domain.RegraDeNegocioException;
-import br.com.connect.crm.domain.entidades.entity.Entidade;
-import br.com.connect.crm.domain.entidades.repository.EntidadeRepository;
-import br.com.connect.crm.domain.entidades.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.entidades.vo.DadosEntidade;
-import br.com.connect.crm.domain.usuario.entity.Usuario;
-import br.com.connect.crm.domain.usuario.repository.UsuarioRepository;
-import br.com.connect.crm.domain.usuario.vo.DadosDetalheUsuario;
-import br.com.connect.crm.domain.usuario.vo.DadosUsuario;
+import br.com.connect.crm.domain.entidade.entity.Entidade;
+import br.com.connect.crm.domain.entidade.repository.EntidadeRepository;
+import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
+import br.com.connect.crm.domain.entidade.vo.DadosEntidade;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;

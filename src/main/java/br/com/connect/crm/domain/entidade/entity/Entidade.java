@@ -1,9 +1,8 @@
-package br.com.connect.crm.domain.entidades.entity;
+package br.com.connect.crm.domain.entidade.entity;
 
-import br.com.connect.crm.domain.entidades.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.entidades.vo.DadosEntidade;
-import br.com.connect.crm.domain.entidades.vo.TipoEntidade;
-import br.com.connect.crm.domain.usuario.vo.DadosUsuario;
+import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
+import br.com.connect.crm.domain.entidade.vo.DadosEntidade;
+import br.com.connect.crm.domain.entidade.vo.TipoEntidade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

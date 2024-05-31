@@ -1,11 +1,8 @@
 package br.com.connect.crm.controller;
 
-import br.com.connect.crm.domain.entidades.service.EntidadeService;
-import br.com.connect.crm.domain.entidades.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.entidades.vo.DadosEntidade;
-import br.com.connect.crm.domain.usuario.service.UsuarioService;
-import br.com.connect.crm.domain.usuario.vo.DadosDetalheUsuario;
-import br.com.connect.crm.domain.usuario.vo.DadosUsuario;
+import br.com.connect.crm.domain.entidade.service.EntidadeService;
+import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
+import br.com.connect.crm.domain.entidade.vo.DadosEntidade;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package br.com.connect.crm.domain.entidades.vo;
+package br.com.connect.crm.domain.entidade.vo;
 
 import java.io.Serializable;
 

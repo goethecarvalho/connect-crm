@@ -1,6 +1,6 @@
-package br.com.connect.crm.domain.entidades.vo;
+package br.com.connect.crm.domain.entidade.vo;
 
-import br.com.connect.crm.domain.entidades.entity.Entidade;
+import br.com.connect.crm.domain.entidade.entity.Entidade;
 
 import java.io.Serializable;
 
