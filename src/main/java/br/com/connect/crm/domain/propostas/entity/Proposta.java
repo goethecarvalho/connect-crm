@@ -2,6 +2,7 @@ package br.com.connect.crm.domain.propostas.entity;
 
 import br.com.connect.crm.domain.entidades.entity.Entidade;
 import br.com.connect.crm.domain.propostas.vo.DadosProposta;
+import br.com.connect.crm.domain.propostas.vo.TipoProposta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class Proposta {
     private LocalDate data;
     private BigDecimal valor;
 
+    @Enumerated(EnumType.STRING)
+    private TipoProposta tipo;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entidade_id")
     private Entidade entidade;
@@ -32,6 +36,15 @@ public class Proposta {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
+        this.entidade = entidade;
+        this.tipo = dados.tipo();
+    }
+
+    public Proposta(DadosProposta dados, Entidade entidade) {
+        this.descricao = dados.descricao();
+        this.data = dados.data();
+        this.valor = dados.valor();
+        this.tipo = dados.tipo();
         this.entidade = entidade;
     }
 

@@ -1,8 +1,5 @@
 package br.com.connect.crm.domain.propostas.vo;
 
-import br.com.connect.crm.domain.entidades.entity.Entidade;
-import br.com.connect.crm.domain.entidades.vo.TipoEntidade;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,11 +9,12 @@ public record DadosProposta(
         String descricao,
         LocalDate data,
         BigDecimal valor,
-        Long idEntidade
+        Long entidade,
+        TipoProposta tipo
         ) implements Serializable {
 
-    public DadosProposta(String descricao, LocalDate data, BigDecimal valor, Long idEntidade) {
-        this(null, descricao, data, valor, idEntidade);
+    public DadosProposta(String descricao, LocalDate data, BigDecimal valor, Long entidade, TipoProposta tipo) {
+        this(null, descricao, data, valor, entidade, tipo);
     }
 
 }

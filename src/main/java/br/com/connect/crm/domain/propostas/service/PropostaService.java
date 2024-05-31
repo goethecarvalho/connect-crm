@@ -1,6 +1,8 @@
 package br.com.connect.crm.domain.propostas.service;
 
 import br.com.connect.crm.domain.RegraDeNegocioException;
+import br.com.connect.crm.domain.entidades.entity.Entidade;
+import br.com.connect.crm.domain.entidades.vo.DadosDetalheEntidade;
 import br.com.connect.crm.domain.propostas.entity.Proposta;
 import br.com.connect.crm.domain.propostas.repository.PropostaRepository;
 import br.com.connect.crm.domain.propostas.vo.DadosDetalheProposta;
@@ -26,12 +28,14 @@ public class PropostaService {
     }
 
     @CacheEvict(value = "listaPropostas", allEntries = true)
-    public DadosDetalheProposta cadastrarProposta(DadosProposta dados) {
+    public DadosDetalheProposta cadastrarProposta(DadosProposta dados, DadosDetalheEntidade entidade) {
         if (dados.descricao() == null || dados.descricao().isEmpty()) {
             throw new RegraDeNegocioException("O nome deve estar preenchido!");
         }
 
-        var proposta = new Proposta(dados);
+        Entidade entidadeDados = new Entidade(entidade);
+
+        var proposta = new Proposta(dados, entidadeDados);
 
         repository.save(proposta);
 
@@ -47,7 +51,8 @@ public class PropostaService {
                 dados.descricao(),
                 dados.data(),
                 dados.valor(),
-                dados.idEntidade()
+                dados.entidade(),
+                dados.tipo()
         );
 
         proposta.atualizarDados(propostaAtualizada);

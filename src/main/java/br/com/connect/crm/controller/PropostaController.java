@@ -33,8 +33,8 @@ public class PropostaController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosProposta dados, UriComponentsBuilder uriBuilder){
-        DadosDetalheEntidade entidade = entidadeService.detalhar(dados.id());
-        var dadosPropostaCadastrada = propostaService.cadastrarProposta(dados);
+        DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
+        var dadosPropostaCadastrada = propostaService.cadastrarProposta(dados, entidade);
         var uri = uriBuilder.path("propostas/{id}").buildAndExpand(dadosPropostaCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosPropostaCadastrada);
     }

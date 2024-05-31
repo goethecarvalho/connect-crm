@@ -19,6 +19,7 @@ CREATE TABLE propostas (
     data TIMESTAMP not null,
     valor DECIMAL(10, 2),
     entidade_id bigint not null,
+    tipo VARCHAR(50) NOT NULL, -- pode ser 'residencial' ou 'comercial'
     FOREIGN KEY (entidade_id) REFERENCES entidades (id)
 );
 

@@ -1,5 +1,6 @@
 package br.com.connect.crm.domain.entidades.entity;
 
+import br.com.connect.crm.domain.entidades.vo.DadosDetalheEntidade;
 import br.com.connect.crm.domain.entidades.vo.DadosEntidade;
 import br.com.connect.crm.domain.entidades.vo.TipoEntidade;
 import br.com.connect.crm.domain.usuario.vo.DadosUsuario;
@@ -29,6 +30,12 @@ public class Entidade {
     }
 
     public void atualizarDados(DadosEntidade dados) {
+        this.nome = dados.nome();
+        this.tipo = dados.tipo();
+    }
+
+    public Entidade(DadosDetalheEntidade dados) {
+        this.id = dados.id();
         this.nome = dados.nome();
         this.tipo = dados.tipo();
     }
