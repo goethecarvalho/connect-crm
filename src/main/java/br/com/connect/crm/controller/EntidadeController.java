@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("entidades")
+@RequestMapping("/api/entidades")
 public class EntidadeController {
 
     @Autowired

@@ -14,8 +14,4 @@ public record DadosProposta(
         StatusProposta status
         ) implements Serializable {
 
-    public DadosProposta(String descricao, LocalDate data, BigDecimal valor, Long entidade, TipoProposta tipo, StatusProposta status) {
-        this(null, descricao, data, valor, entidade, tipo, status);
-    }
-
 }

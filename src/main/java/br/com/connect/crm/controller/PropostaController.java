@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("propostas")
+@RequestMapping("/api/propostas")
 public class PropostaController {
 
     @Autowired

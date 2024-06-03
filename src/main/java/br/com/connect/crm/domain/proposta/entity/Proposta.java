@@ -1,6 +1,8 @@
 package br.com.connect.crm.domain.proposta.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
+import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
+import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
 import br.com.connect.crm.domain.proposta.vo.StatusProposta;
 import br.com.connect.crm.domain.proposta.vo.TipoProposta;
@@ -36,14 +38,6 @@ public class Proposta {
     @JoinColumn(name = "entidade_id")
     private Entidade entidade;
 
-    public Proposta(DadosProposta dados) {
-        this.descricao = dados.descricao();
-        this.data = dados.data();
-        this.valor = dados.valor();
-        this.entidade = entidade;
-        this.tipo = dados.tipo();
-    }
-
     public Proposta(DadosProposta dados, Entidade entidade) {
         this.descricao = dados.descricao();
         this.data = dados.data();
@@ -56,6 +50,15 @@ public class Proposta {
     public void atualizarDados(DadosProposta dados) {
         this.descricao = dados.descricao();
         this.data = dados.data();
+        this.valor = dados.valor();
+        this.tipo = dados.tipo();
+        this.entidade = entidade;
+        this.status = dados.status();
+    }
+
+    public Proposta(DadosDetalheProposta dados) {
+        this.id = dados.id();
+        this.descricao = dados.descricao();
         this.valor = dados.valor();
         this.tipo = dados.tipo();
         this.entidade = entidade;

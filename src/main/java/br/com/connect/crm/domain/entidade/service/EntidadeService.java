@@ -20,12 +20,10 @@ public class EntidadeService {
         this.repository = repository;
     }
 
-    @Cacheable(value = "listaEntidades")
     public Page<DadosDetalheEntidade> listar(Pageable paginacao) {
         return repository.findAll(paginacao).map(DadosDetalheEntidade::new);
     }
 
-    @CacheEvict(value = "listaEntidades", allEntries = true)
     public DadosDetalheEntidade cadastrarEntidade(DadosEntidade dados) {
         if (dados.nome() == null || dados.nome().isEmpty()) {
             throw new RegraDeNegocioException("O nome deve estar preenchido!");
@@ -38,7 +36,6 @@ public class EntidadeService {
         return new DadosDetalheEntidade(entidade);
     }
 
-    @CacheEvict(value = "listaEntidades", allEntries = true)
     public DadosDetalheEntidade atualizarEntidade(Long id, DadosEntidade dados) {
         var entidade = repository.findById(id).orElseThrow(() -> new RuntimeException("Entidade não encontrada"));
 
@@ -60,7 +57,6 @@ public class EntidadeService {
         return new DadosDetalheEntidade(entidade);
     }
 
-    @CacheEvict(value = "listaEntidades", allEntries = true)
     public void deletarEntidade(Long id) {
         var entidade = repository.findById(id).orElseThrow(() -> new RuntimeException("Entidade não encontrada"));
         repository.delete(entidade);
