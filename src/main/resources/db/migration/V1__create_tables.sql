@@ -10,7 +10,6 @@ CREATE TABLE entidades (
     nome VARCHAR(255) NOT NULL,
     tipo VARCHAR(50) NOT NULL -- pode ser 'cliente', 'fornecedor' ou 'prestador'
 
-    CONSTRAINT chk_tipo CHECK (tipo IN ('CLIENTE', 'FORNECEDOR', 'PRESTADOR'))
 );
 
 CREATE TABLE propostas (
@@ -31,6 +30,6 @@ CREATE TABLE transacoes (
     valor DECIMAL(10, 2) NOT NULL,
     entidade_id BIGINT NOT NULL,
     proposta_id BIGINT NOT NULL,
-    tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('debito', 'credito')), -- pode ser 'debito' ou 'credito'
+    tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('DEBITO', 'CREDITO')), -- pode ser 'debito' ou 'credito'
     FOREIGN KEY (proposta_id) REFERENCES propostas (id)
 );

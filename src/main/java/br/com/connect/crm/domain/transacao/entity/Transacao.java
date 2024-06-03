@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "propostas")
+@Table(name = "transacoes")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,7 +42,7 @@ public class Transacao {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
-        this.tipo = tipo;
+        this.tipo = dados.tipo();
         this.entidade = entidadeDados;
         this.proposta = propostaDados;
     }
@@ -51,7 +51,7 @@ public class Transacao {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
-        this.tipo = tipo;
+        this.tipo = dados.tipo();
         this.entidade = entidade;
         this.proposta = proposta;
     }
