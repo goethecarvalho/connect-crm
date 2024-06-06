@@ -4,7 +4,9 @@ import br.com.connect.crm.domain.RegraDeNegocioException;
 import br.com.connect.crm.domain.usuario.entity.Usuario;
 import br.com.connect.crm.domain.usuario.repository.UsuarioRepository;
 import br.com.connect.crm.domain.usuario.vo.DadosDetalheUsuario;
+import br.com.connect.crm.domain.usuario.vo.DadosLoginUsuario;
 import br.com.connect.crm.domain.usuario.vo.DadosUsuario;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -60,5 +62,11 @@ public class UsuarioService {
     public void deletarUsuario(Long id) {
         var usuario = repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         repository.delete(usuario);
+    }
+
+    public Boolean efetuarLogin(@Valid DadosLoginUsuario dados) {
+        String login = dados.login();
+        String senha = dados.senha();
+        return repository.findLoginUsuario(login, senha);
     }
 }

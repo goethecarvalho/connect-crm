@@ -1,27 +1,33 @@
 package br.com.connect.crm.controller;
 
-import br.com.connect.crm.domain.usuario.vo.DadosLogin;
+import br.com.connect.crm.domain.usuario.service.UsuarioService;
+import br.com.connect.crm.domain.usuario.vo.DadosLoginUsuario;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
 public class LoginController {
 
-    @PostMapping("/login")
-    @Transactional
-    public ResponseEntity<String> login(@RequestBody @Valid DadosLogin dados, UriComponentsBuilder uriBuilder) {
-        if ("admin".equals(dados.getUsername()) && "admin".equals(dados.getPassword())) {
+    @Autowired
+    private final UsuarioService service;
+
+    public LoginController(UsuarioService service) {
+        this.service = service;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/login")
+    public ResponseEntity<String> login(@RequestBody @Valid DadosLoginUsuario dados, UriComponentsBuilder uriBuilder) {
+        Boolean usuarioLogado = service.efetuarLogin(dados);
+        if (usuarioLogado) {
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+
 }
