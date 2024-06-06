@@ -5,8 +5,6 @@ import br.com.connect.crm.domain.usuario.entity.Usuario;
 import br.com.connect.crm.domain.usuario.repository.UsuarioRepository;
 import br.com.connect.crm.domain.usuario.vo.DadosDetalheUsuario;
 import br.com.connect.crm.domain.usuario.vo.DadosUsuario;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,6 +40,7 @@ public class UsuarioService {
         DadosUsuario usuarioAtualizado = new DadosUsuario(
                 dados.id(),
                 dados.nome(),
+                dados.email(),
                 dados.login(),
                 dados.senha()
         );

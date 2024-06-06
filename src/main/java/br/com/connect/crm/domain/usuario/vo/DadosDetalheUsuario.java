@@ -7,11 +7,12 @@ import java.io.Serializable;
 public record DadosDetalheUsuario (
         Long id,
         String nome,
+        String email,
         String login,
         String senha) implements Serializable {
 
     public DadosDetalheUsuario(Usuario usuario) {
-        this(usuario.getId(), usuario.getNome(), usuario.getLogin(), usuario.getSenha());
+        this(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getLogin(), usuario.getSenha());
     }
 
 }
