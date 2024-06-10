@@ -24,7 +24,7 @@ public class Entidade {
     private TipoEntidade tipo;
 
     public Entidade(DadosEntidade dados) {
-        this.nome = dados.nome();
+        this.nome = dados.nome().toUpperCase();
         this.tipo = dados.tipo();
     }
 
