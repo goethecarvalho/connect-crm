@@ -31,7 +31,7 @@ public class PropostaService {
     @CacheEvict(value = "listaPropostas", allEntries = true)
     public DadosDetalheProposta cadastrar(DadosProposta dados, DadosDetalheEntidade entidade) {
         if (dados.descricao() == null || dados.descricao().isEmpty()) {
-            throw new RegraDeNegocioException("O nome deve estar preenchido!");
+            throw new RegraDeNegocioException("A descrição deve estar preenchida!");
         }
 
         Entidade entidadeDados = new Entidade(entidade);

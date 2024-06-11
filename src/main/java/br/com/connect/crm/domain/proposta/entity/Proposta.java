@@ -32,7 +32,7 @@ public class Proposta {
     private StatusProposta status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidade_id")
+    @JoinColumn(name = "id_entidade")
     private Entidade entidade;
 
     public Proposta(DadosProposta dados, Entidade entidade) {

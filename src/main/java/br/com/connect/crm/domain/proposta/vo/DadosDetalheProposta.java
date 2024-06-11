@@ -35,11 +35,7 @@ public record DadosDetalheProposta(
                 proposta.getDescricao(),
                 proposta.getData(),
                 proposta.getValor(),
-                new Entidade(
-                        proposta.getEntidade().getId(),
-                        proposta.getEntidade().getNome(),
-                        proposta.getEntidade().getTipo()
-                ),
+                proposta.getEntidade(),
                 proposta.getTipo(),
                 proposta.getStatus()
         );
