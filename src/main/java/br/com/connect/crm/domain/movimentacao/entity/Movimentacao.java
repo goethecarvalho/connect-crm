@@ -25,7 +25,7 @@ public class Movimentacao {
     private String descricao;
     private LocalDate data;
     private BigDecimal valor;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoMovimentacao tipo;
 
     @ManyToOne(fetch = FetchType.LAZY)
