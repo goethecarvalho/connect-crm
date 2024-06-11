@@ -1,11 +1,9 @@
-package br.com.connect.crm.domain.transacao.entity;
+package br.com.connect.crm.domain.movimentacao.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
-import br.com.connect.crm.domain.proposta.vo.DadosProposta;
-import br.com.connect.crm.domain.proposta.vo.TipoProposta;
-import br.com.connect.crm.domain.transacao.vo.DadosTransacao;
-import br.com.connect.crm.domain.transacao.vo.TipoTransacao;
+import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
+import br.com.connect.crm.domain.movimentacao.vo.TipoMovimentacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +17,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transacao {
+public class Movimentacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +26,17 @@ public class Transacao {
     private LocalDate data;
     private BigDecimal valor;
     @Enumerated(EnumType.STRING)
-    private TipoTransacao tipo;
+    private TipoMovimentacao tipo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidade_id", nullable = false)
+    @JoinColumn(name = "id_entidade", nullable = false)
     private Entidade entidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proposta_id", nullable = false)
+    @JoinColumn(name = "id_proposta", nullable = false)
     private Proposta proposta;
 
-    public Transacao(DadosTransacao dados, Entidade entidadeDados, Proposta propostaDados) {
+    public Movimentacao(DadosMovimentacao dados, Entidade entidadeDados, Proposta propostaDados) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
@@ -47,7 +45,7 @@ public class Transacao {
         this.proposta = propostaDados;
     }
 
-    public void atualizarDados(DadosTransacao dados) {
+    public void atualizarDados(DadosMovimentacao dados) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();

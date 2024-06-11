@@ -1,23 +1,23 @@
-package br.com.connect.crm.domain.transacao.vo;
+package br.com.connect.crm.domain.movimentacao.vo;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
-import br.com.connect.crm.domain.transacao.entity.Transacao;
+import br.com.connect.crm.domain.movimentacao.entity.Movimentacao;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record DadosDetalheTransacao(
+public record DadosDetalheMovimentacao(
         Long id,
         String descricao,
         LocalDate data,
         BigDecimal valor,
         Entidade entidade,
         Proposta proposta,
-        TipoTransacao tipo) implements Serializable {
+        TipoMovimentacao tipo) implements Serializable {
 
-    public DadosDetalheTransacao(Long id, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, Proposta proposta, TipoTransacao tipo) {
+    public DadosDetalheMovimentacao(Long id, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, Proposta proposta, TipoMovimentacao tipo) {
         this.id = id;
         this.descricao = descricao;
         this.data = data;
@@ -27,8 +27,9 @@ public record DadosDetalheTransacao(
         this.tipo = tipo;
     }
 
-    public DadosDetalheTransacao(Transacao transacao) {
+    public DadosDetalheMovimentacao(Movimentacao transacao) {
 
         this(transacao.getId(), transacao.getDescricao(), transacao.getData(), transacao.getValor(), transacao.getEntidade(), transacao.getProposta(), transacao.getTipo());
     }
+
 }
