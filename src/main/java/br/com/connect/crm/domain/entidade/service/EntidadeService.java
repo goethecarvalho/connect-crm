@@ -10,6 +10,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EntidadeService {
@@ -24,7 +28,7 @@ public class EntidadeService {
         return repository.findAll(paginacao).map(DadosDetalheEntidade::new);
     }
 
-    public DadosDetalheEntidade cadastrarEntidade(DadosEntidade dados) {
+    public DadosDetalheEntidade cadastrar(DadosEntidade dados) {
         if (dados.nome() == null || dados.nome().isEmpty()) {
             throw new RegraDeNegocioException("O nome deve estar preenchido!");
         }
@@ -36,7 +40,7 @@ public class EntidadeService {
         return new DadosDetalheEntidade(entidade);
     }
 
-    public DadosDetalheEntidade atualizarEntidade(Long id, DadosEntidade dados) {
+    public DadosDetalheEntidade atualizar(Long id, DadosEntidade dados) {
         var entidade = repository.findById(id).orElseThrow(() -> new RuntimeException("Entidade não encontrada"));
 
         DadosEntidade entidadeAtualizada = new DadosEntidade(
@@ -57,7 +61,7 @@ public class EntidadeService {
         return new DadosDetalheEntidade(entidade);
     }
 
-    public void deletarEntidade(Long id) {
+    public void deletar(Long id) {
         var entidade = repository.findById(id).orElseThrow(() -> new RuntimeException("Entidade não encontrada"));
         repository.delete(entidade);
     }

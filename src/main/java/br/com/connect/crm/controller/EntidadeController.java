@@ -28,7 +28,7 @@ public class EntidadeController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosEntidade dados, UriComponentsBuilder uriBuilder){
 
-        var dadosEntidadeCadastrada = service.cadastrarEntidade(dados);
+        var dadosEntidadeCadastrada = service.cadastrar(dados);
         var uri = uriBuilder.path("entidades/{id}").buildAndExpand(dadosEntidadeCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosEntidadeCadastrada);
     }
@@ -48,14 +48,14 @@ public class EntidadeController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DadosDetalheEntidade> atualizar(@PathVariable Long id, @RequestBody @Valid DadosEntidade dados) {
-        var entidadeAtualizada = service.atualizarEntidade(id, dados);
+        var entidadeAtualizada = service.atualizar(id, dados);
         return ResponseEntity.ok(entidadeAtualizada);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletarEntidade(id);
+        service.deletar(id);
         return ResponseEntity.noContent().build();
     }
 
