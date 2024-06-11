@@ -24,11 +24,12 @@ public class PropostaService {
 
     @Cacheable(value = "listaPropostas")
     public Page<DadosDetalheProposta> listar(Pageable paginacao) {
-        return repository.findAll(paginacao).map(DadosDetalheProposta::new);
+        return repository.findAll(paginacao)
+                .map(proposta -> new DadosDetalheProposta(proposta));
     }
 
     @CacheEvict(value = "listaPropostas", allEntries = true)
-    public DadosDetalheProposta cadastrarProposta(DadosProposta dados, DadosDetalheEntidade entidade) {
+    public DadosDetalheProposta cadastrar(DadosProposta dados, DadosDetalheEntidade entidade) {
         if (dados.descricao() == null || dados.descricao().isEmpty()) {
             throw new RegraDeNegocioException("O nome deve estar preenchido!");
         }
@@ -43,11 +44,12 @@ public class PropostaService {
     }
 
     @CacheEvict(value = "listaPropostas", allEntries = true)
-    public DadosDetalheProposta atualizarProposta(Long id, DadosProposta dados) {
+    public DadosDetalheProposta atualizar(Long id, DadosProposta dados) {
         var proposta = repository.findById(id).orElseThrow(() -> new RuntimeException("Proposta não encontrada"));
 
         DadosProposta propostaAtualizada = new DadosProposta(
                 dados.id(),
+                dados.numero(),
                 dados.descricao(),
                 dados.data(),
                 dados.valor(),
@@ -69,7 +71,7 @@ public class PropostaService {
     }
 
     @CacheEvict(value = "listaPropostas", allEntries = true)
-    public void deletarProposta(Long id) {
+    public void deletar(Long id) {
         var proposta = repository.findById(id).orElseThrow(() -> new RuntimeException("Proposta não encontrada"));
         repository.delete(proposta);
     }

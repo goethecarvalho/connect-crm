@@ -34,13 +34,13 @@ public class PropostaController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosProposta dados, UriComponentsBuilder uriBuilder){
         DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
-        var dadosPropostaCadastrada = propostaService.cadastrarProposta(dados, entidade);
+        var dadosPropostaCadastrada = propostaService.cadastrar(dados, entidade);
         var uri = uriBuilder.path("propostas/{id}").buildAndExpand(dadosPropostaCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosPropostaCadastrada);
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosDetalheProposta>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosDetalheProposta>> listar(@PageableDefault(size = 10, sort = {"descricao"}) Pageable paginacao) {
         var proposta = propostaService.listar(paginacao);
         return ResponseEntity.ok(proposta);
     }
@@ -54,14 +54,14 @@ public class PropostaController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DadosDetalheProposta> atualizar(@PathVariable Long id, @RequestBody @Valid DadosProposta dados) {
-        var propostaAtualizada = propostaService.atualizarProposta(id, dados);
+        var propostaAtualizada = propostaService.atualizar(id, dados);
         return ResponseEntity.ok(propostaAtualizada);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        propostaService.deletarProposta(id);
+        propostaService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,7 +1,6 @@
 package br.com.connect.crm.domain.proposta.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
-import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
 import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
 import br.com.connect.crm.domain.proposta.vo.StatusProposta;
@@ -20,25 +19,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Proposta {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer numero;
     private String descricao;
     private LocalDate data;
     private BigDecimal valor;
-
     @Enumerated(EnumType.STRING)
     private TipoProposta tipo;
-
     @Enumerated(EnumType.STRING)
     private StatusProposta status;
-
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entidade_id")
     private Entidade entidade;
 
     public Proposta(DadosProposta dados, Entidade entidade) {
+        this.numero = dados.numero();
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
@@ -48,6 +45,7 @@ public class Proposta {
     }
 
     public void atualizarDados(DadosProposta dados) {
+        this.numero = dados.numero();
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
@@ -58,6 +56,7 @@ public class Proposta {
 
     public Proposta(DadosDetalheProposta dados) {
         this.id = dados.id();
+        this.numero = dados.numero();
         this.descricao = dados.descricao();
         this.valor = dados.valor();
         this.tipo = dados.tipo();

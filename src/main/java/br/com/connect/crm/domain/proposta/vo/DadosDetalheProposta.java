@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 public record DadosDetalheProposta(
         Long id,
+        Integer numero,
         String descricao,
         LocalDate data,
         BigDecimal valor,
@@ -16,8 +17,9 @@ public record DadosDetalheProposta(
         TipoProposta tipo,
         StatusProposta status) implements Serializable {
 
-    public DadosDetalheProposta(Long id, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, TipoProposta tipo, StatusProposta status) {
+    public DadosDetalheProposta(Long id, Integer numero, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, TipoProposta tipo, StatusProposta status) {
         this.id = id;
+        this.numero = numero;
         this.descricao = descricao;
         this.data = data;
         this.valor = valor;
@@ -27,7 +29,19 @@ public record DadosDetalheProposta(
     }
 
     public DadosDetalheProposta(Proposta proposta) {
-
-        this(proposta.getId(), proposta.getDescricao(), proposta.getData(), proposta.getValor(), proposta.getEntidade(), proposta.getTipo(), proposta.getStatus());
+        this(
+                proposta.getId(),
+                proposta.getNumero(),
+                proposta.getDescricao(),
+                proposta.getData(),
+                proposta.getValor(),
+                new Entidade(
+                        proposta.getEntidade().getId(),
+                        proposta.getEntidade().getNome(),
+                        proposta.getEntidade().getTipo()
+                ),
+                proposta.getTipo(),
+                proposta.getStatus()
+        );
     }
 }

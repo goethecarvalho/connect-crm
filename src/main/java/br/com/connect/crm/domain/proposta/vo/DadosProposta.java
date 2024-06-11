@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public record DadosProposta(
         Long id,
+        Integer numero,
         String descricao,
         LocalDate data,
         BigDecimal valor,
