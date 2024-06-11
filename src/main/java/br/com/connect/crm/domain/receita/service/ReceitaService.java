@@ -41,11 +41,11 @@ public class ReceitaService {
 
         Proposta propostaDados = new Proposta(proposta);
 
-        var transacao = new Receita(dados, propostaDados);
+        var receita = new Receita(dados, propostaDados);
 
-        repository.save(transacao);
+        repository.save(receita);
 
-        return new DadosDetalheReceita(transacao);
+        return new DadosDetalheReceita(receita);
     }
 
     @CacheEvict(value = "listaReceitas", allEntries = true)

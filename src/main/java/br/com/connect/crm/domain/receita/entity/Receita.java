@@ -31,11 +31,11 @@ public class Receita {
     @JoinColumn(name = "id_proposta", nullable = false)
     private Proposta proposta;
 
-    public Receita(DadosReceita dados, Proposta propostaDados) {
+    public Receita(DadosReceita dados, Proposta proposta) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
-        this.proposta = propostaDados;
+        this.proposta = proposta;
     }
 
     public void atualizarDados(DadosReceita dados) {

@@ -13,10 +13,10 @@ public record DadosReceita(
         String descricao,
         LocalDate data,
         BigDecimal valor,
-        Proposta proposta
+        Long proposta
         ) implements Serializable {
 
-    public DadosReceita(Long id, String descricao, LocalDate data, BigDecimal valor, TipoMovimentacao tipo, Proposta proposta) {
+    public DadosReceita(Long id, String descricao, LocalDate data, BigDecimal valor, TipoMovimentacao tipo, Long proposta) {
         this(null, descricao, data, valor, proposta);
     }
 }

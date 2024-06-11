@@ -33,7 +33,7 @@ public class ReceitaController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosReceita dados, UriComponentsBuilder uriBuilder){
-        DadosDetalheProposta proposta = propostaService.detalhar(dados.proposta().getId());
+        DadosDetalheProposta proposta = propostaService.detalhar(dados.proposta());
         var dadosReceitaCadastrada = receitaService.cadastrar(dados, proposta);
         var uri = uriBuilder.path("receitas/{id}").buildAndExpand(dadosReceitaCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosReceitaCadastrada);

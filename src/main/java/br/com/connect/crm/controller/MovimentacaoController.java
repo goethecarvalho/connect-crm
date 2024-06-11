@@ -42,7 +42,7 @@ public class MovimentacaoController {
         DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
         DadosDetalheProposta proposta = propostaService.detalhar(dados.proposta());
         var dadosMovimentacaoCadastrada = movimentacaoService.cadastrar(dados, entidade, proposta);
-        var uri = uriBuilder.path("transacoes/{id}").buildAndExpand(dadosMovimentacaoCadastrada.id()).toUri();
+        var uri = uriBuilder.path("movimentacoes/{id}").buildAndExpand(dadosMovimentacaoCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosMovimentacaoCadastrada);
     }
 
