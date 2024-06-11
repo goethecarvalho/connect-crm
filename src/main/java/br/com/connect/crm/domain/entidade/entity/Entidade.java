@@ -20,7 +20,7 @@ public class Entidade {
     private Long id;
     private String nome;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoEntidade tipo;
 
     public Entidade(DadosEntidade dados) {

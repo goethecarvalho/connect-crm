@@ -26,10 +26,11 @@ public class Proposta {
     private String descricao;
     private LocalDate data;
     private BigDecimal valor;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoProposta tipo;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private StatusProposta status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entidade_id")
     private Entidade entidade;
