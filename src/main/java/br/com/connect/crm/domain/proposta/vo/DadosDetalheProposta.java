@@ -17,7 +17,7 @@ public record DadosDetalheProposta(
         TipoProposta tipo,
         StatusProposta status) implements Serializable {
 
-    public DadosDetalheProposta(Long id, Integer numero, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, TipoProposta tipo, StatusProposta status) {
+   /*public DadosDetalheProposta(Long id, Integer numero, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, TipoProposta tipo, StatusProposta status) {
         this.id = id;
         this.numero = numero;
         this.descricao = descricao;
@@ -26,7 +26,7 @@ public record DadosDetalheProposta(
         this.entidade = entidade;
         this.tipo = tipo;
         this.status = status;
-    }
+    }*/
 
     public DadosDetalheProposta(Proposta proposta) {
         this(
