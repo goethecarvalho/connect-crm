@@ -4,7 +4,7 @@ import br.com.connect.crm.domain.entidade.entity.Entidade;
 
 import java.io.Serializable;
 
-public record DadosDetalheEntidade(
+public record DadosDetalheEntidade (
         Long id,
         String nome,
         TipoEntidade tipo) implements Serializable {

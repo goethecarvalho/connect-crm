@@ -43,7 +43,7 @@ public class PropostaService {
         return new DadosDetalheProposta(proposta);
     }
 
-    //@CacheEvict(value = "listaPropostas", allEntries = true)
+    @CacheEvict(value = "listaPropostas", allEntries = true)
     public DadosDetalheProposta atualizar(Long id, DadosProposta dados) {
         var proposta = repository.findById(id).orElseThrow(() -> new RuntimeException("Proposta não encontrada"));
 
@@ -70,7 +70,7 @@ public class PropostaService {
         return new DadosDetalheProposta(proposta);
     }
 
-    //@CacheEvict(value = "listaPropostas", allEntries = true)
+    @CacheEvict(value = "listaPropostas", allEntries = true)
     public void deletar(Long id) {
         var proposta = repository.findById(id).orElseThrow(() -> new RuntimeException("Proposta não encontrada"));
         repository.delete(proposta);
