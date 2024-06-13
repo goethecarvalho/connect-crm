@@ -4,6 +4,7 @@ import br.com.connect.crm.domain.entidade.entity.Entidade;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.TipoMovimentacao;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Movimentacao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate data;
     private BigDecimal valor;
     @Enumerated(EnumType.ORDINAL)

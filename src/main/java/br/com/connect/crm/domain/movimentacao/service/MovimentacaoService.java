@@ -9,11 +9,13 @@ import br.com.connect.crm.domain.movimentacao.entity.Movimentacao;
 import br.com.connect.crm.domain.movimentacao.repository.MovimentacaoRepository;
 import br.com.connect.crm.domain.movimentacao.vo.DadosDetalheMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
+import org.hibernate.Hibernate;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MovimentacaoService {
@@ -24,10 +26,23 @@ public class MovimentacaoService {
         this.repository = repository;
     }
 
-    @Cacheable(value = "listaMovimentacoes")
+    /*@Cacheable(value = "listaMovimentacoes")
+    @Transactional(readOnly = true)
     public Page<DadosDetalheMovimentacao> listar(Pageable paginacao) {
         return repository.findAll(paginacao)
                 .map(movimentacao -> new DadosDetalheMovimentacao(movimentacao));
+    }*/
+
+    @Transactional(readOnly = true)
+    public Page<DadosDetalheMovimentacao> listar(Pageable paginacao) {
+        return repository.findAll(paginacao)
+                .map(movimentacao -> {
+                    // Inicialize as associações necessárias
+                    Hibernate.initialize(movimentacao.getProposta());
+                    Hibernate.initialize(movimentacao.getEntidade());
+                    // Converta para o DTO
+                    return new DadosDetalheMovimentacao(movimentacao);
+                });
     }
 
     @CacheEvict(value = "listaMovimentacoes", allEntries = true)
