@@ -25,8 +25,11 @@ public class UsuarioService {
     }
 
     public DadosDetalheUsuario cadastrarUsuario(DadosUsuario dados) {
-        if (dados.nome() == null || dados.nome().isEmpty()) {
-            throw new RegraDeNegocioException("O nome deve estar preenchido!");
+        if (dados.login() == null || dados.login().isEmpty()) {
+            throw new RegraDeNegocioException("O login deve estar preenchido!");
+        }
+        if (dados.senha() == null || dados.senha().isEmpty()) {
+            throw new RegraDeNegocioException("A senha deve estar preenchida!");
         }
 
         var usuario = new Usuario(dados);
@@ -41,8 +44,6 @@ public class UsuarioService {
 
         DadosUsuario usuarioAtualizado = new DadosUsuario(
                 dados.id(),
-                dados.nome(),
-                dados.email(),
                 dados.login(),
                 dados.senha()
         );
