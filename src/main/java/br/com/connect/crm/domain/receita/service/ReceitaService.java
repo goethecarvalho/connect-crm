@@ -30,7 +30,8 @@ public class ReceitaService {
 
     @Cacheable(value = "listaReceitas")
     public Page<DadosDetalheReceita> listar(Pageable paginacao) {
-        return repository.findAll(paginacao).map(DadosDetalheReceita::new);
+        return repository.findAll(paginacao)
+                .map(receita -> new DadosDetalheReceita(receita));
     }
 
     @CacheEvict(value = "listaReceitas", allEntries = true)
