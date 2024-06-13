@@ -26,14 +26,8 @@ public class MovimentacaoService {
         this.repository = repository;
     }
 
-    /*@Cacheable(value = "listaMovimentacoes")
     @Transactional(readOnly = true)
-    public Page<DadosDetalheMovimentacao> listar(Pageable paginacao) {
-        return repository.findAll(paginacao)
-                .map(movimentacao -> new DadosDetalheMovimentacao(movimentacao));
-    }*/
-
-    @Transactional(readOnly = true)
+    @Cacheable(value = "listaMovimentacoes")
     public Page<DadosDetalheMovimentacao> listar(Pageable paginacao) {
         return repository.findAll(paginacao)
                 .map(movimentacao -> {

@@ -1,12 +1,6 @@
 package br.com.connect.crm.domain.receita.service;
 
 import br.com.connect.crm.domain.RegraDeNegocioException;
-import br.com.connect.crm.domain.entidade.entity.Entidade;
-import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.movimentacao.entity.Movimentacao;
-import br.com.connect.crm.domain.movimentacao.repository.MovimentacaoRepository;
-import br.com.connect.crm.domain.movimentacao.vo.DadosDetalheMovimentacao;
-import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.receita.entity.Receita;

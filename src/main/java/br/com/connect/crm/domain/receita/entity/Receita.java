@@ -1,8 +1,5 @@
 package br.com.connect.crm.domain.receita.entity;
 
-import br.com.connect.crm.domain.entidade.entity.Entidade;
-import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
-import br.com.connect.crm.domain.movimentacao.vo.TipoMovimentacao;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.receita.vo.DadosReceita;
 import com.fasterxml.jackson.annotation.JsonFormat;
