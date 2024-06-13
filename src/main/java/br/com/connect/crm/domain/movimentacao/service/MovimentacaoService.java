@@ -26,7 +26,8 @@ public class MovimentacaoService {
 
     @Cacheable(value = "listaMovimentacoes")
     public Page<DadosDetalheMovimentacao> listar(Pageable paginacao) {
-        return repository.findAll(paginacao).map(DadosDetalheMovimentacao::new);
+        return repository.findAll(paginacao)
+                .map(movimentacao -> new DadosDetalheMovimentacao(movimentacao));
     }
 
     @CacheEvict(value = "listaMovimentacoes", allEntries = true)

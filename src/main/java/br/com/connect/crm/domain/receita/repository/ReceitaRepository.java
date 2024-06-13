@@ -1,6 +1,5 @@
 package br.com.connect.crm.domain.receita.repository;
 
-import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.receita.entity.Receita;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
