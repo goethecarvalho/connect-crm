@@ -34,7 +34,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosDetalheUsuario>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosDetalheUsuario>> listar(@PageableDefault(size = 10, sort = {"login"}) Pageable paginacao) {
         var usuario = service.listar(paginacao);
         return ResponseEntity.ok(usuario);
     }
