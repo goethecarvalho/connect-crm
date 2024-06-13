@@ -17,19 +17,9 @@ public record DadosDetalheMovimentacao(
         Proposta proposta,
         TipoMovimentacao tipo) implements Serializable {
 
-    public DadosDetalheMovimentacao(Long id, String descricao, LocalDate data, BigDecimal valor, Entidade entidade, Proposta proposta, TipoMovimentacao tipo) {
-        this.id = id;
-        this.descricao = descricao;
-        this.data = data;
-        this.valor = valor;
-        this.entidade = entidade;
-        this.proposta = proposta;
-        this.tipo = tipo;
-    }
+    public DadosDetalheMovimentacao(Movimentacao movimentacao) {
 
-    public DadosDetalheMovimentacao(Movimentacao transacao) {
-
-        this(transacao.getId(), transacao.getDescricao(), transacao.getData(), transacao.getValor(), transacao.getEntidade(), transacao.getProposta(), transacao.getTipo());
+        this(movimentacao.getId(), movimentacao.getDescricao(), movimentacao.getData(), movimentacao.getValor(), movimentacao.getEntidade(), movimentacao.getProposta(), movimentacao.getTipo());
     }
 
 }
