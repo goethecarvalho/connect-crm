@@ -5,6 +5,7 @@ import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.TipoMovimentacao;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.receita.vo.DadosReceita;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Receita implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate data;
     private BigDecimal valor;
 
