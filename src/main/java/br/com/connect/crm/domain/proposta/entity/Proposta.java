@@ -5,6 +5,7 @@ import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
 import br.com.connect.crm.domain.proposta.vo.StatusProposta;
 import br.com.connect.crm.domain.proposta.vo.TipoProposta;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Proposta implements Serializable {
     private Long id;
     private Integer numero;
     private String descricao;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate data;
     private BigDecimal valor;
     @Enumerated(EnumType.ORDINAL)
