@@ -8,6 +8,7 @@ import br.com.connect.crm.domain.proposta.repository.PropostaRepository;
 import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
 import br.com.connect.crm.domain.saldo.repository.SaldoRepository;
+import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;

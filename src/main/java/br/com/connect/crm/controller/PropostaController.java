@@ -5,6 +5,8 @@ import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
 import br.com.connect.crm.domain.proposta.service.PropostaService;
 import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
+import br.com.connect.crm.domain.saldo.service.SaldoService;
+import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +27,13 @@ public class PropostaController {
     @Autowired
     private final EntidadeService entidadeService;
 
-    public PropostaController(PropostaService propostaService, EntidadeService entidadeService) {
+    @Autowired
+    private final SaldoService saldoService;
+
+    public PropostaController(PropostaService propostaService, EntidadeService entidadeService, SaldoService saldoService) {
         this.propostaService = propostaService;
         this.entidadeService = entidadeService;
+        this.saldoService = saldoService;
     }
 
     @PostMapping
@@ -35,6 +41,15 @@ public class PropostaController {
     public ResponseEntity cadastrar(@RequestBody @Valid DadosProposta dados, UriComponentsBuilder uriBuilder){
         DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
         var dadosPropostaCadastrada = propostaService.cadastrar(dados, entidade);
+
+        DadosSaldo saldo = new DadosSaldo(
+                dadosPropostaCadastrada.data(),
+                dadosPropostaCadastrada.valor(),
+                dadosPropostaCadastrada.id()
+        );
+
+        saldoService.cadastrar(saldo, dadosPropostaCadastrada);
+
         var uri = uriBuilder.path("propostas/{id}").buildAndExpand(dadosPropostaCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosPropostaCadastrada);
     }
