@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/receitas")
-public class ReceitaController {
+@RequestMapping("/api/saldos")
+public class SaldoController {
 
     @Autowired
-    private final SaldoService receitaService;
+    private final SaldoService saldoService;
 
     @Autowired
     private final PropostaService propostaService;
 
-    public ReceitaController(SaldoService receitaService, PropostaService propostaService) {
-        this.receitaService = receitaService;
+    public SaldoController(SaldoService saldoService, PropostaService propostaService) {
+        this.saldoService = saldoService;
         this.propostaService = propostaService;
     }
 
@@ -34,34 +34,34 @@ public class ReceitaController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosSaldo dados, UriComponentsBuilder uriBuilder){
         DadosDetalheProposta proposta = propostaService.detalhar(dados.proposta());
-        var dadosReceitaCadastrada = receitaService.cadastrar(dados, proposta);
-        var uri = uriBuilder.path("receitas/{id}").buildAndExpand(dadosReceitaCadastrada.id()).toUri();
-        return ResponseEntity.created(uri).body(dadosReceitaCadastrada);
+        var dadosSaldoCadastrado = saldoService.cadastrar(dados, proposta);
+        var uri = uriBuilder.path("saldos/{id}").buildAndExpand(dadosSaldoCadastrado.id()).toUri();
+        return ResponseEntity.created(uri).body(dadosSaldoCadastrado);
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosDetalheSaldo>> listar(@PageableDefault(size = 10, sort = {"descricao"}) Pageable paginacao) {
-        var receita = receitaService.listar(paginacao);
-        return ResponseEntity.ok(receita);
+    public ResponseEntity<Page<DadosDetalheSaldo>> listar(@PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+        var saldo = saldoService.listar(paginacao);
+        return ResponseEntity.ok(saldo);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalheSaldo> detalhar(@PathVariable Long id) {
-        var receita = receitaService.detalhar(id);
-        return ResponseEntity.ok(receita);
+        var saldo = saldoService.detalhar(id);
+        return ResponseEntity.ok(saldo);
     }
 
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DadosDetalheSaldo> atualizar(@PathVariable Long id, @RequestBody @Valid DadosSaldo dados) {
-        var receitaAtualizada = receitaService.atualizar(id, dados);
-        return ResponseEntity.ok(receitaAtualizada);
+        var saldoAtualizada = saldoService.atualizar(id, dados);
+        return ResponseEntity.ok(saldoAtualizada);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        receitaService.deletar(id);
+        saldoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 
