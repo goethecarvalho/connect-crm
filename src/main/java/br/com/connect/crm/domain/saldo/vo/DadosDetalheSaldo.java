@@ -18,4 +18,6 @@ public record DadosDetalheSaldo(
         this(saldo.getId(), saldo.getData(), saldo.getValor(), saldo.getProposta());
     }
 
+    public void atualizarDados(DadosSaldo saldoAtualizado) {
+    }
 }

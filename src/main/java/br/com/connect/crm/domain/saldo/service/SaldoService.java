@@ -62,13 +62,18 @@ public class SaldoService {
     }
 
     public DadosDetalheSaldo detalhar(Long id) {
-        var receita = repository.findById(id).get();
-        return new DadosDetalheSaldo(receita);
+        var saldo = repository.findById(id).get();
+        return new DadosDetalheSaldo(saldo);
     }
 
     @CacheEvict(value = "listaSaldos", allEntries = true)
     public void deletar(Long id) {
-        var receita = repository.findById(id).orElseThrow(() -> new RuntimeException("Receita não encontrada"));
-        repository.delete(receita);
+        var saldo = repository.findById(id).orElseThrow(() -> new RuntimeException("Saldo não encontrado"));
+        repository.delete(saldo);
+    }
+
+    public DadosDetalheSaldo detalharPorProposta(Long proposta) {
+        var saldo = repository.findByIdProposta(proposta).get();
+        return new DadosDetalheSaldo(saldo);
     }
 }

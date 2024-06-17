@@ -9,6 +9,9 @@ import br.com.connect.crm.domain.movimentacao.entity.Movimentacao;
 import br.com.connect.crm.domain.movimentacao.repository.MovimentacaoRepository;
 import br.com.connect.crm.domain.movimentacao.vo.DadosDetalheMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
+import br.com.connect.crm.domain.saldo.repository.SaldoRepository;
+import br.com.connect.crm.domain.saldo.vo.DadosDetalheSaldo;
+import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
 import org.hibernate.Hibernate;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,8 +25,11 @@ public class MovimentacaoService {
 
     private final MovimentacaoRepository repository;
 
-    public MovimentacaoService(MovimentacaoRepository repository) {
+    private final SaldoRepository saldoRepository;
+
+    public MovimentacaoService(MovimentacaoRepository repository, SaldoRepository saldoRepository) {
         this.repository = repository;
+        this.saldoRepository = saldoRepository;
     }
 
     @Transactional(readOnly = true)
@@ -40,7 +46,7 @@ public class MovimentacaoService {
     }
 
     @CacheEvict(value = "listaMovimentacoes", allEntries = true)
-    public DadosDetalheMovimentacao cadastrar(DadosMovimentacao dados, DadosDetalheEntidade entidade, DadosDetalheProposta proposta) {
+    public DadosDetalheMovimentacao cadastrar(DadosMovimentacao dados, DadosDetalheEntidade entidade, DadosDetalheProposta proposta, DadosDetalheSaldo saldo) {
         if (dados.descricao() == null || dados.descricao().isEmpty()) {
             throw new RegraDeNegocioException("A descrição deve estar preenchida!");
         }
@@ -51,6 +57,17 @@ public class MovimentacaoService {
         var movimentacao = new Movimentacao(dados, entidadeDados, propostaDados);
 
         repository.save(movimentacao);
+
+        DadosSaldo saldoAtualizado = new DadosSaldo(
+                saldo.id(),
+                dados.data(),
+                dados.valor(),
+                dados.proposta()
+        );
+
+        saldo.atualizarDados(saldoAtualizado);
+
+        saldoRepository.update(saldo.id(), dados.valor(), dados.data());
 
         return new DadosDetalheMovimentacao(movimentacao);
     }
