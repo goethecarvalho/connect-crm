@@ -1,7 +1,9 @@
 package br.com.connect.crm.domain.entidade.vo;
 
 public enum TipoEntidade {
-    CLIENTE,
+    PROPRIETARIO,
     FORNECEDOR,
-    PRESTADOR
+    PRESTADOR,
+    SERVICO,
+    CLIENTE
 }
