@@ -7,9 +7,4 @@ public record DadosEntidade(
         String nome,
         TipoEntidade tipo
         ) implements Serializable {
-
-    public DadosEntidade(String nome, TipoEntidade tipo) {
-        this(null, nome, tipo);
-    }
-
 }
