@@ -1,10 +1,10 @@
 package br.com.connect.crm.controller;
 
-import br.com.connect.crm.domain.proposta.service.PropostaService;
-import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
-import br.com.connect.crm.domain.saldo.service.SaldoService;
-import br.com.connect.crm.domain.saldo.vo.DadosDetalheSaldo;
-import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
+import br.com.connect.crm.domain.entidade.service.EntidadeService;
+import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
+import br.com.connect.crm.domain.receita.service.ReceitaService;
+import br.com.connect.crm.domain.receita.vo.DadosDetalheReceita;
+import br.com.connect.crm.domain.receita.vo.DadosReceita;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,42 +20,42 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ReceitaController {
 
     @Autowired
-    private final SaldoService receitaService;
+    private final ReceitaService receitaService;
 
     @Autowired
-    private final PropostaService propostaService;
+    private final EntidadeService entidadeService;
 
-    public ReceitaController(SaldoService receitaService, PropostaService propostaService) {
+    public ReceitaController(ReceitaService receitaService, EntidadeService entidadeService) {
         this.receitaService = receitaService;
-        this.propostaService = propostaService;
+        this.entidadeService = entidadeService;
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosSaldo dados, UriComponentsBuilder uriBuilder){
-        DadosDetalheProposta proposta = propostaService.detalhar(dados.proposta());
-        var dadosReceitaCadastrada = receitaService.cadastrar(dados, proposta);
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosReceita dados, UriComponentsBuilder uriBuilder){
+        DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
+        var dadosReceitaCadastrada = receitaService.cadastrar(dados, entidade);
         var uri = uriBuilder.path("receitas/{id}").buildAndExpand(dadosReceitaCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosReceitaCadastrada);
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosDetalheSaldo>> listar(@PageableDefault(size = 10, sort = {"descricao"}) Pageable paginacao) {
-        var receita = receitaService.listar(paginacao);
-        return ResponseEntity.ok(receita);
+    public ResponseEntity<Page<DadosDetalheReceita>> listar(@PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+        var saldo = receitaService.listar(paginacao);
+        return ResponseEntity.ok(saldo);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DadosDetalheSaldo> detalhar(@PathVariable Long id) {
-        var receita = receitaService.detalhar(id);
-        return ResponseEntity.ok(receita);
+    public ResponseEntity<DadosDetalheReceita> detalhar(@PathVariable Long id) {
+        var saldo = receitaService.detalhar(id);
+        return ResponseEntity.ok(saldo);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<DadosDetalheSaldo> atualizar(@PathVariable Long id, @RequestBody @Valid DadosSaldo dados) {
-        var receitaAtualizada = receitaService.atualizar(id, dados);
-        return ResponseEntity.ok(receitaAtualizada);
+    public ResponseEntity<DadosDetalheReceita> atualizar(@PathVariable Long id, @RequestBody @Valid DadosReceita dados) {
+        var saldoAtualizada = receitaService.atualizar(id, dados);
+        return ResponseEntity.ok(saldoAtualizada);
     }
 
     @DeleteMapping("/{id}")
