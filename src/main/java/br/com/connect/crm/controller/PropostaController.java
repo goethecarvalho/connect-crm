@@ -5,8 +5,7 @@ import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
 import br.com.connect.crm.domain.proposta.service.PropostaService;
 import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
-import br.com.connect.crm.domain.saldo.service.SaldoService;
-import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
+import br.com.connect.crm.domain.receita.service.ReceitaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,27 +27,20 @@ public class PropostaController {
     private final EntidadeService entidadeService;
 
     @Autowired
-    private final SaldoService saldoService;
+    private final ReceitaService receitaService;
 
-    public PropostaController(PropostaService propostaService, EntidadeService entidadeService, SaldoService saldoService) {
+    public PropostaController(PropostaService propostaService, EntidadeService entidadeService, ReceitaService receitaService) {
         this.propostaService = propostaService;
         this.entidadeService = entidadeService;
-        this.saldoService = saldoService;
+        this.receitaService = receitaService;
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosProposta dados, UriComponentsBuilder uriBuilder){
+
         DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
         var dadosPropostaCadastrada = propostaService.cadastrar(dados, entidade);
-
-        DadosSaldo saldo = new DadosSaldo(
-                dadosPropostaCadastrada.data(),
-                dadosPropostaCadastrada.valor(),
-                dadosPropostaCadastrada.id()
-        );
-
-        saldoService.cadastrar(saldo, dadosPropostaCadastrada);
 
         var uri = uriBuilder.path("propostas/{id}").buildAndExpand(dadosPropostaCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosPropostaCadastrada);

@@ -7,8 +7,8 @@ import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.proposta.repository.PropostaRepository;
 import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.proposta.vo.DadosProposta;
-import br.com.connect.crm.domain.saldo.repository.SaldoRepository;
-import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
+import br.com.connect.crm.domain.receita.entity.Receita;
+import br.com.connect.crm.domain.receita.repository.ReceitaRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -20,11 +20,11 @@ public class PropostaService {
 
     private final PropostaRepository repository;
 
-    private final SaldoRepository saldoRepository;
+    private final ReceitaRepository receitaRepository;
 
-    public PropostaService(PropostaRepository repository, SaldoRepository saldoRepository) {
+    public PropostaService(PropostaRepository repository, ReceitaRepository receitaRepository) {
         this.repository = repository;
-        this.saldoRepository = saldoRepository;
+        this.receitaRepository = receitaRepository;
     }
 
     @Cacheable(value = "listaPropostas")
@@ -44,6 +44,13 @@ public class PropostaService {
         var proposta = new Proposta(dados, entidadeDados);
 
         repository.save(proposta);
+
+        Receita receita = new Receita(
+                proposta,
+                entidadeDados
+        );
+
+        receitaRepository.save(receita);
 
         return new DadosDetalheProposta(proposta);
     }
