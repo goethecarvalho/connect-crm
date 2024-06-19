@@ -1,6 +1,7 @@
 package br.com.connect.crm.domain.receita.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
+import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
 import br.com.connect.crm.domain.proposta.entity.Proposta;
 import br.com.connect.crm.domain.receita.vo.DadosReceita;
 import br.com.connect.crm.domain.receita.vo.TipoReceita;
@@ -59,6 +60,17 @@ public class Receita implements Serializable {
             this.tipo = TipoReceita.PROJETO;
         }
         this.entidade = entidade;
+    }
+
+    public Receita(DadosMovimentacao dados, Entidade entidadeDados) {
+        this.data = dados.data();
+        this.valor = dados.valor();
+        if (entidadeDados.getTipo().ordinal() == 0){
+            this.tipo = TipoReceita.INVESTIMENTO;
+        } else if (entidadeDados.getTipo().ordinal() == 4){
+            this.tipo = TipoReceita.PROJETO;
+        }
+        this.entidade = entidadeDados;
     }
 
     public void atualizarDados(DadosReceita dados) {

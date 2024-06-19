@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
@@ -20,7 +19,7 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
     @Query("SELECT r FROM Receita r JOIN FETCH r.entidade e where r.id = :id")
     Optional<Receita> findById(Long id);
 
-    @Query("SELECT r FROM Receita r JOIN FETCH r.entidade e WHERE r.id = :id")
+    @Query("SELECT r FROM Receita r JOIN FETCH r.entidade e WHERE e.id = :id")
     Optional<Receita> findByEntidade(@Param("id") Long id);
 
     @Modifying
