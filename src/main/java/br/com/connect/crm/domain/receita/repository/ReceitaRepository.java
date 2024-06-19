@@ -20,7 +20,7 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
     @Query("SELECT r FROM Receita r JOIN FETCH r.entidade e where r.id = :id")
     Optional<Receita> findById(Long id);
 
-    @Query("SELECT r FROM Receita r JOIN FETCH r.entidade e WHERE e.id = :id")
+    @Query("SELECT r FROM Receita r JOIN FETCH r.entidade e WHERE r.id = :id")
     Optional<Receita> findByEntidade(@Param("id") Long id);
 
     @Modifying
