@@ -3,15 +3,15 @@ package br.com.connect.crm.domain.movimentacao.service;
 import br.com.connect.crm.domain.RegraDeNegocioException;
 import br.com.connect.crm.domain.entidade.entity.Entidade;
 import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.proposta.entity.Proposta;
-import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.movimentacao.entity.Movimentacao;
 import br.com.connect.crm.domain.movimentacao.repository.MovimentacaoRepository;
 import br.com.connect.crm.domain.movimentacao.vo.DadosDetalheMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
-import br.com.connect.crm.domain.saldo.repository.SaldoRepository;
-import br.com.connect.crm.domain.saldo.vo.DadosDetalheSaldo;
-import br.com.connect.crm.domain.saldo.vo.DadosSaldo;
+import br.com.connect.crm.domain.proposta.entity.Proposta;
+import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
+import br.com.connect.crm.domain.receita.entity.Receita;
+import br.com.connect.crm.domain.receita.repository.ReceitaRepository;
+import br.com.connect.crm.domain.receita.vo.DadosDetalheReceita;
 import org.hibernate.Hibernate;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,11 +25,11 @@ public class MovimentacaoService {
 
     private final MovimentacaoRepository repository;
 
-    private final SaldoRepository saldoRepository;
+    private final ReceitaRepository receitaRepository;
 
-    public MovimentacaoService(MovimentacaoRepository repository, SaldoRepository saldoRepository) {
+    public MovimentacaoService(MovimentacaoRepository repository, ReceitaRepository receitaRepository) {
         this.repository = repository;
-        this.saldoRepository = saldoRepository;
+        this.receitaRepository = receitaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +38,6 @@ public class MovimentacaoService {
         return repository.findAll(paginacao)
                 .map(movimentacao -> {
                     // Inicialize as associações necessárias
-                    Hibernate.initialize(movimentacao.getProposta());
                     Hibernate.initialize(movimentacao.getEntidade());
                     // Converta para o DTO
                     return new DadosDetalheMovimentacao(movimentacao);
@@ -46,28 +45,46 @@ public class MovimentacaoService {
     }
 
     @CacheEvict(value = "listaMovimentacoes", allEntries = true)
-    public DadosDetalheMovimentacao cadastrar(DadosMovimentacao dados, DadosDetalheEntidade entidade, DadosDetalheProposta proposta, DadosDetalheSaldo saldo) {
+    public DadosDetalheMovimentacao cadastrar(DadosMovimentacao dados, DadosDetalheEntidade entidade, DadosDetalheProposta proposta, DadosDetalheReceita receita) {
         if (dados.descricao() == null || dados.descricao().isEmpty()) {
             throw new RegraDeNegocioException("A descrição deve estar preenchida!");
         }
 
         Entidade entidadeDados = new Entidade(entidade);
-        Proposta propostaDados = new Proposta(proposta);
+        Proposta propostaDados = null;
+        Movimentacao movimentacao;
 
-        var movimentacao = new Movimentacao(dados, entidadeDados, propostaDados);
+        if (proposta != null){
+            propostaDados = new Proposta(proposta);
+            movimentacao = new Movimentacao(dados, propostaDados, entidadeDados);
+        }else{
+            movimentacao = new Movimentacao(dados, entidadeDados);
+        }
 
         repository.save(movimentacao);
 
-        DadosSaldo saldoAtualizado = new DadosSaldo(
-                saldo.id(),
-                dados.data(),
-                dados.valor(),
-                dados.proposta()
-        );
+        if (entidadeDados.getTipo().ordinal() == 0 || entidadeDados.getTipo().ordinal() == 3 && propostaDados == null){
+            Receita receitaDados = new Receita(
+                    dados,
+                    entidadeDados
+            );
 
-        saldo.atualizarDados(saldoAtualizado);
+            receitaRepository.save(receitaDados);
+        }else{
+            DadosDetalheReceita receitaAtualizada = new DadosDetalheReceita(
+                    receita.id(),
+                    dados.data(),
+                    dados.valor(),
+                    receita.entidade(),
+                    receita.tipo()
+            );
 
-        saldoRepository.update(saldo.id(), dados.valor(), dados.data());
+            if (dados.tipo().ordinal() == 0){
+                receitaRepository.updateDebido(receitaAtualizada.id(), receitaAtualizada.valor());
+            }else{
+                receitaRepository.updateCredito(receitaAtualizada.id(), receitaAtualizada.valor());
+            }
+        }
 
         return new DadosDetalheMovimentacao(movimentacao);
     }
@@ -76,17 +93,17 @@ public class MovimentacaoService {
     public DadosDetalheMovimentacao atualizar(Long id, DadosMovimentacao dados) {
         var movimentacao = repository.findById(id).orElseThrow(() -> new RuntimeException("Movimentação não encontrada"));
 
-        DadosMovimentacao transacaoAtualizada = new DadosMovimentacao(
+        DadosMovimentacao movimentacaoAtualizada = new DadosMovimentacao(
                 dados.id(),
                 dados.descricao(),
                 dados.data(),
                 dados.valor(),
-                dados.tipo(),
                 dados.entidade(),
-                dados.proposta()
+                dados.proposta(),
+                dados.tipo()
         );
 
-        movimentacao.atualizarDados(transacaoAtualizada);
+        movimentacao.atualizarDados(movimentacaoAtualizada);
 
         repository.save(movimentacao);
 

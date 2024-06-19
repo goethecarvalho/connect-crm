@@ -7,8 +7,8 @@ import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
 import br.com.connect.crm.domain.movimentacao.service.MovimentacaoService;
 import br.com.connect.crm.domain.movimentacao.vo.DadosDetalheMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
-import br.com.connect.crm.domain.saldo.service.SaldoService;
-import br.com.connect.crm.domain.saldo.vo.DadosDetalheSaldo;
+import br.com.connect.crm.domain.receita.service.ReceitaService;
+import br.com.connect.crm.domain.receita.vo.DadosDetalheReceita;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,22 +33,30 @@ public class MovimentacaoController {
     private final PropostaService propostaService;
 
     @Autowired
-    private final SaldoService saldoService;
+    private final ReceitaService receitaService;
 
-    public MovimentacaoController(MovimentacaoService movimentacaoService, EntidadeService entidadeService, PropostaService propostaService, SaldoService saldoService) {
+    public MovimentacaoController(MovimentacaoService movimentacaoService, EntidadeService entidadeService, PropostaService propostaService, ReceitaService receitaService) {
         this.movimentacaoService = movimentacaoService;
         this.entidadeService = entidadeService;
         this.propostaService = propostaService;
-        this.saldoService = saldoService;
+        this.receitaService = receitaService;
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosMovimentacao dados, UriComponentsBuilder uriBuilder){
         DadosDetalheEntidade entidade = entidadeService.detalhar(dados.entidade());
-        DadosDetalheProposta proposta = propostaService.detalhar(dados.proposta());
-        DadosDetalheSaldo saldo = saldoService.detalharPorProposta(dados.proposta());
-        var dadosMovimentacaoCadastrada = movimentacaoService.cadastrar(dados, entidade, proposta, saldo);
+        DadosDetalheProposta proposta = null;
+        DadosDetalheReceita receita;
+
+        if (dados.proposta() != null) {
+            proposta = propostaService.detalhar(dados.proposta());
+            receita = receitaService.detalharPorEntidade(proposta.entidade().getId());
+        }else{
+            receita = receitaService.detalharPorEntidade(dados.entidade());
+        }
+
+        var dadosMovimentacaoCadastrada = movimentacaoService.cadastrar(dados, entidade, proposta, receita);
         var uri = uriBuilder.path("movimentacoes/{id}").buildAndExpand(dadosMovimentacaoCadastrada.id()).toUri();
         return ResponseEntity.created(uri).body(dadosMovimentacaoCadastrada);
     }

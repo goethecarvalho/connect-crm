@@ -36,16 +36,24 @@ public class Movimentacao implements Serializable {
     private Entidade entidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_proposta", nullable = false)
-    private Proposta proposta;
+    @JoinColumn(name = "id_proposta", nullable = true)
+    private Proposta propósta;
 
-    public Movimentacao(DadosMovimentacao dados, Entidade entidadeDados, Proposta propostaDados) {
+    public Movimentacao(DadosMovimentacao dados, Proposta proposta, Entidade entidade) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
         this.tipo = dados.tipo();
-        this.entidade = entidadeDados;
-        this.proposta = propostaDados;
+        this.entidade = entidade;
+        this.propósta = proposta;
+    }
+
+    public Movimentacao(DadosMovimentacao dados, Entidade entidade) {
+        this.descricao = dados.descricao();
+        this.data = dados.data();
+        this.valor = dados.valor();
+        this.tipo = dados.tipo();
+        this.entidade = entidade;
     }
 
     public void atualizarDados(DadosMovimentacao dados) {
@@ -54,7 +62,7 @@ public class Movimentacao implements Serializable {
         this.valor = dados.valor();
         this.tipo = dados.tipo();
         this.entidade = entidade;
-        this.proposta = proposta;
+        this.propósta = propósta;
     }
 
 }

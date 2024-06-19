@@ -19,7 +19,7 @@ public record DadosDetalheMovimentacao(
 
     public DadosDetalheMovimentacao(Movimentacao movimentacao) {
 
-        this(movimentacao.getId(), movimentacao.getDescricao(), movimentacao.getData(), movimentacao.getValor(), movimentacao.getEntidade(), movimentacao.getProposta(), movimentacao.getTipo());
+        this(movimentacao.getId(), movimentacao.getDescricao(), movimentacao.getData(), movimentacao.getValor(), movimentacao.getEntidade(), movimentacao.getPropósta(), movimentacao.getTipo());
     }
 
 }
