@@ -1,7 +1,7 @@
 package br.com.connect.crm.domain.movimentacao.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
-import br.com.connect.crm.domain.proposta.entity.Proposta;
+import br.com.connect.crm.domain.projeto.entity.Projeto;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.TipoMovimentacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,16 +36,16 @@ public class Movimentacao implements Serializable {
     private Entidade entidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_proposta", nullable = true)
-    private Proposta propósta;
+    @JoinColumn(name = "id_projeto", nullable = true)
+    private Projeto projeto;
 
-    public Movimentacao(DadosMovimentacao dados, Proposta proposta, Entidade entidade) {
+    public Movimentacao(DadosMovimentacao dados, Projeto projeto, Entidade entidade) {
         this.descricao = dados.descricao();
         this.data = dados.data();
         this.valor = dados.valor();
         this.tipo = dados.tipo();
         this.entidade = entidade;
-        this.propósta = proposta;
+        this.projeto = projeto;
     }
 
     public Movimentacao(DadosMovimentacao dados, Entidade entidade) {
@@ -62,7 +62,7 @@ public class Movimentacao implements Serializable {
         this.valor = dados.valor();
         this.tipo = dados.tipo();
         this.entidade = entidade;
-        this.propósta = propósta;
+        this.projeto = projeto;
     }
 
 }

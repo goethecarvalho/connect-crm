@@ -11,11 +11,11 @@ public record DadosMovimentacao(
         LocalDate data,
         BigDecimal valor,
         Long entidade,
-        Long proposta,
+        Long projeto,
         TipoMovimentacao tipo
         ) implements Serializable {
 
-    /*public DadosMovimentacao(Long id, String descricao, LocalDate data, BigDecimal valor, Long entidade, Long proposta, TipoMovimentacao tipo) {
-        this(null, descricao, data, valor, entidade, proposta, tipo);
+    /*public DadosMovimentacao(Long id, String descricao, LocalDate data, BigDecimal valor, Long entidade, Long projeto, TipoMovimentacao tipo) {
+        this(null, descricao, data, valor, entidade, projeto, tipo);
     }*/
 }

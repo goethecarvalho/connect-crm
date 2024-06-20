@@ -1,7 +1,7 @@
 package br.com.connect.crm.domain.receita.vo;
 
 import br.com.connect.crm.domain.entidade.vo.DadosDetalheEntidade;
-import br.com.connect.crm.domain.proposta.entity.Proposta;
+import br.com.connect.crm.domain.projeto.entity.Projeto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,8 +14,8 @@ public record DadosReceita(
         TipoReceita tipo
 ) implements Serializable {
 
-    public DadosReceita(Proposta proposta, DadosDetalheEntidade entidade) {
-        this(proposta.getData(), proposta.getValor(), entidade.id(), TipoReceita.PROJETO);
+    public DadosReceita(Projeto projeto, DadosDetalheEntidade entidade) {
+        this(projeto.getData(), projeto.getValor(), entidade.id(), TipoReceita.PROJETO);
     }
 
 }

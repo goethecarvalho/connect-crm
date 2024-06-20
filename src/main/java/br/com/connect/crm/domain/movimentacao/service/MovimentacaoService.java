@@ -7,8 +7,8 @@ import br.com.connect.crm.domain.movimentacao.entity.Movimentacao;
 import br.com.connect.crm.domain.movimentacao.repository.MovimentacaoRepository;
 import br.com.connect.crm.domain.movimentacao.vo.DadosDetalheMovimentacao;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
-import br.com.connect.crm.domain.proposta.entity.Proposta;
-import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
+import br.com.connect.crm.domain.projeto.entity.Projeto;
+import br.com.connect.crm.domain.projeto.vo.DadosDetalheProjeto;
 import br.com.connect.crm.domain.receita.entity.Receita;
 import br.com.connect.crm.domain.receita.repository.ReceitaRepository;
 import br.com.connect.crm.domain.receita.vo.DadosDetalheReceita;
@@ -45,25 +45,25 @@ public class MovimentacaoService {
     }
 
     @CacheEvict(value = "listaMovimentacoes", allEntries = true)
-    public DadosDetalheMovimentacao cadastrar(DadosMovimentacao dados, DadosDetalheEntidade entidade, DadosDetalheProposta proposta, DadosDetalheReceita receita) {
+    public DadosDetalheMovimentacao cadastrar(DadosMovimentacao dados, DadosDetalheEntidade entidade, DadosDetalheProjeto projeto, DadosDetalheReceita receita) {
         if (dados.descricao() == null || dados.descricao().isEmpty()) {
             throw new RegraDeNegocioException("A descrição deve estar preenchida!");
         }
 
         Entidade entidadeDados = new Entidade(entidade);
-        Proposta propostaDados = null;
+        Projeto projetoDados = null;
         Movimentacao movimentacao;
 
-        if (proposta != null){
-            propostaDados = new Proposta(proposta);
-            movimentacao = new Movimentacao(dados, propostaDados, entidadeDados);
+        if (projeto != null){
+            projetoDados = new Projeto(projeto);
+            movimentacao = new Movimentacao(dados, projetoDados, entidadeDados);
         }else{
             movimentacao = new Movimentacao(dados, entidadeDados);
         }
 
         repository.save(movimentacao);
 
-        if (entidadeDados.getTipo().ordinal() == 0 || entidadeDados.getTipo().ordinal() == 3 && propostaDados == null){
+        if (entidadeDados.getTipo().ordinal() == 0 || entidadeDados.getTipo().ordinal() == 3 && projetoDados == null){
             Receita receitaDados = new Receita(
                     dados,
                     entidadeDados
@@ -99,7 +99,7 @@ public class MovimentacaoService {
                 dados.data(),
                 dados.valor(),
                 dados.entidade(),
-                dados.proposta(),
+                dados.projeto(),
                 dados.tipo()
         );
 

@@ -1,10 +1,10 @@
-package br.com.connect.crm.domain.proposta.entity;
+package br.com.connect.crm.domain.projeto.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
-import br.com.connect.crm.domain.proposta.vo.DadosDetalheProposta;
-import br.com.connect.crm.domain.proposta.vo.DadosProposta;
-import br.com.connect.crm.domain.proposta.vo.StatusProposta;
-import br.com.connect.crm.domain.proposta.vo.TipoProposta;
+import br.com.connect.crm.domain.projeto.vo.DadosDetalheProjeto;
+import br.com.connect.crm.domain.projeto.vo.DadosProjeto;
+import br.com.connect.crm.domain.projeto.vo.StatusProjeto;
+import br.com.connect.crm.domain.projeto.vo.TipoProjeto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,11 +16,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "propostas")
+@Table(name = "projetos")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Proposta implements Serializable {
+public class Projeto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,15 +30,15 @@ public class Proposta implements Serializable {
     private LocalDate data;
     private BigDecimal valor;
     @Enumerated(EnumType.ORDINAL)
-    private TipoProposta tipo;
+    private TipoProjeto tipo;
     @Enumerated(EnumType.ORDINAL)
-    private StatusProposta status;
+    private StatusProjeto status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_entidade")
     private Entidade entidade;
 
-    public Proposta(DadosProposta dados, Entidade entidade) {
+    public Projeto(DadosProjeto dados, Entidade entidade) {
         this.numero = dados.numero();
         this.descricao = dados.descricao();
         this.data = dados.data();
@@ -48,7 +48,7 @@ public class Proposta implements Serializable {
         this.status = dados.status();
     }
 
-    public void atualizarDados(DadosProposta dados) {
+    public void atualizarDados(DadosProjeto dados) {
         this.numero = dados.numero();
         this.descricao = dados.descricao();
         this.data = dados.data();
@@ -58,7 +58,7 @@ public class Proposta implements Serializable {
         this.status = dados.status();
     }
 
-    public Proposta(DadosDetalheProposta dados) {
+    public Projeto(DadosDetalheProjeto dados) {
         this.id = dados.id();
         this.numero = dados.numero();
         this.descricao = dados.descricao();

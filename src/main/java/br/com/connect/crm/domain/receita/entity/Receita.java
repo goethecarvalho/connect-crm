@@ -2,7 +2,7 @@ package br.com.connect.crm.domain.receita.entity;
 
 import br.com.connect.crm.domain.entidade.entity.Entidade;
 import br.com.connect.crm.domain.movimentacao.vo.DadosMovimentacao;
-import br.com.connect.crm.domain.proposta.entity.Proposta;
+import br.com.connect.crm.domain.projeto.entity.Projeto;
 import br.com.connect.crm.domain.receita.vo.DadosReceita;
 import br.com.connect.crm.domain.receita.vo.TipoReceita;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -38,7 +38,7 @@ public class Receita implements Serializable {
     private Entidade entidade;
 
     @Transient
-    private Proposta proposta;
+    private Projeto projeto;
 
     public Receita(DadosReceita dados, Entidade entidade) {
         this.data = dados.data();
@@ -51,9 +51,9 @@ public class Receita implements Serializable {
         this.entidade = entidade;
     }
 
-    public Receita(Proposta proposta, Entidade entidade) {
-        this.data = proposta.getData();
-        this.valor = proposta.getValor();
+    public Receita(Projeto projeto, Entidade entidade) {
+        this.data = projeto.getData();
+        this.valor = projeto.getValor();
         if (entidade.getTipo().ordinal() == 0){
             this.tipo = TipoReceita.INVESTIMENTO;
         } else if (entidade.getTipo().ordinal() == 4){
