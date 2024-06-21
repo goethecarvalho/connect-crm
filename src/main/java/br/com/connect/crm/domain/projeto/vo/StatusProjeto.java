@@ -1,9 +1,9 @@
 package br.com.connect.crm.domain.projeto.vo;
 
 public enum StatusProjeto {
-    ABERTA,
+    ABERTO,
     ANDAMENTO,
-    CANCELADA,
-    FECHADA
+    CANCELADO,
+    FECHADO
 
 }
