@@ -1,4 +1,4 @@
-CREATE TABLE projetos (
+CREATE TABLE propostas (
     id SERIAL PRIMARY KEY,
     numero INTEGER NOT NULL,
     descricao VARCHAR(255) NOT NULL,
