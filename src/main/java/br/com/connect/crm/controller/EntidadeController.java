@@ -24,7 +24,7 @@ public class EntidadeController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosEntidade dados, UriComponentsBuilder uriBuilder){
 
@@ -33,7 +33,7 @@ public class EntidadeController {
         return ResponseEntity.created(uri).body(dadosEntidadeCadastrada);
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<Page<DadosDetalheEntidade>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         var entidade = service.listar(paginacao);
         return ResponseEntity.ok(entidade);
