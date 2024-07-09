@@ -35,7 +35,7 @@ public class ProjetoController {
         this.receitaService = receitaService;
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosProjeto dados, UriComponentsBuilder uriBuilder){
 
@@ -46,7 +46,7 @@ public class ProjetoController {
         return ResponseEntity.created(uri).body(dadosProjetoCadastrado);
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<Page<DadosDetalheProjeto>> listar(@PageableDefault(size = 10, sort = {"descricao"}) Pageable paginacao) {
         var projeto = projetoService.listar(paginacao);
         return ResponseEntity.ok(projeto);

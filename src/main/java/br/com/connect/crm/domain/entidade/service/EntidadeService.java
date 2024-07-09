@@ -62,6 +62,14 @@ public class EntidadeService {
         return new DadosDetalheEntidade(entidade);
     }
 
+    public Page<DadosDetalheEntidade> listarClientes(Pageable paginacao) {
+        return repository.findAllClients(paginacao).map(DadosDetalheEntidade::new);
+    }
+
+    public Page<DadosDetalheEntidade> listarEntidadeReceita(Pageable paginacao) {
+        return repository.findAllEntidadesReceita(paginacao).map(DadosDetalheEntidade::new);
+    }
+
     @CacheEvict(value = "listaEntidades", allEntries = true)
     public void deletar(Long id) {
         var entidade = repository.findById(id).orElseThrow(() -> new RuntimeException("Entidade não encontrada"));

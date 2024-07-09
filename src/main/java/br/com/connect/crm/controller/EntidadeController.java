@@ -34,7 +34,7 @@ public class EntidadeController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<Page<DadosDetalheEntidade>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosDetalheEntidade>> listar(@PageableDefault(size = 50, sort = {"nome"}) Pageable paginacao) {
         var entidade = service.listar(paginacao);
         return ResponseEntity.ok(entidade);
     }
@@ -42,6 +42,18 @@ public class EntidadeController {
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalheEntidade> detalhar(@PathVariable Long id) {
         var entidade = service.detalhar(id);
+        return ResponseEntity.ok(entidade);
+    }
+
+    @GetMapping("/listarClientes")
+    public ResponseEntity<Page<DadosDetalheEntidade>> listarClientes(@PageableDefault(size = 50, sort = {"nome"}) Pageable paginacao) {
+        var entidade = service.listarClientes(paginacao);
+        return ResponseEntity.ok(entidade);
+    }
+
+    @GetMapping("/listarEntidadesReceita")
+    public ResponseEntity<Page<DadosDetalheEntidade>> listarEntidadesReceita(@PageableDefault(size = 50, sort = {"nome"}) Pageable paginacao) {
+        var entidade = service.listarEntidadeReceita(paginacao);
         return ResponseEntity.ok(entidade);
     }
 
